@@ -3,6 +3,7 @@
 using UnityEngine;
 using UnityEditor;
 using Boxophobic.Constants;
+using Boxophobic.Utility;
 
 namespace Boxophobic.StyledGUI
 {
@@ -21,9 +22,31 @@ namespace Boxophobic.StyledGUI
             EditorGUI.DrawRect(fillRect, Constant.CategoryColor);
             EditorGUI.DrawRect(lineRect, Constant.LineColor);
 
-            bannerText = ShowBannerText(bannerText);
+            bannerText = FormatBannerText(bannerText);
 
             GUI.Label(titleRect, bannerText, Constant.HeaderStyle);
+
+            GUI.color = Color.white;
+        }
+
+        public static void DrawInspectorCategory(string bannerText, string message)
+        {
+            GUI.contentColor = Color.white;
+            GUI.color = new Color(1, 1, 1, 0.9f);
+
+            var fullRect = GUILayoutUtility.GetRect(0, 0, 18, 0);
+            var fillRect = new Rect(0, fullRect.y, fullRect.xMax + 10, 18);
+            var lineRect = new Rect(0, fullRect.y, fullRect.xMax + 10, 1);
+            var titleRect = new Rect(fullRect.position.x - 1, fullRect.position.y, fullRect.width, 18);
+
+            EditorGUI.DrawRect(fillRect, Constant.CategoryColor);
+            EditorGUI.DrawRect(lineRect, Constant.LineColor);
+
+            bannerText = FormatBannerText(bannerText);
+            message = BoxoUtils.FormatMessage(message);
+
+            var bannerContext = new GUIContent(bannerText, message);
+            GUI.Label(titleRect, bannerContext, Constant.HeaderStyle);
 
             GUI.color = Color.white;
         }
@@ -70,7 +93,7 @@ namespace Boxophobic.StyledGUI
             EditorGUI.DrawRect(fillRect, Constant.CategoryColor);
             EditorGUI.DrawRect(lineRect, Constant.LineColor);
 
-            bannerText = ShowBannerText(bannerText);
+            bannerText = FormatBannerText(bannerText);
 
             GUI.Label(titleRect, bannerText, Constant.HeaderStyle);
 
@@ -98,7 +121,7 @@ namespace Boxophobic.StyledGUI
             return enabled;
         }
 
-        public static bool DrawInspectorCategory(string bannerText, bool enabled, bool colapsable, string infoText, float top, float down)
+        public static bool DrawInspectorCategory(string bannerText, bool enabled, bool colapsable, string message, float top, float down)
         {
             GUI.contentColor = Color.white;
             GUI.color = new Color(1, 1, 1, 0.9f);
@@ -140,9 +163,10 @@ namespace Boxophobic.StyledGUI
             EditorGUI.DrawRect(fillRect, Constant.CategoryColor);
             EditorGUI.DrawRect(lineRect, Constant.LineColor);
 
-            bannerText = ShowBannerText(bannerText);
+            bannerText = FormatBannerText(bannerText);
+            message = BoxoUtils.FormatMessage(message);
 
-            var bannerContext = new GUIContent(bannerText, infoText);
+            var bannerContext = new GUIContent(bannerText, message);
             GUI.Label(titleRect, bannerContext, Constant.HeaderStyle);
 
             GUI.color = new Color(1, 1, 1, 0.39f);
@@ -169,7 +193,7 @@ namespace Boxophobic.StyledGUI
             return enabled;
         }
 
-        public static bool DrawInspectorCategory(string bannerText, bool enabled, bool colapsable, string dotColor, string infoText, float top, float down)
+        public static bool DrawInspectorCategory(string bannerText, bool enabled, bool colapsable, string dotColor, string message, float top, float down)
         {
             GUI.contentColor = Color.white;
             GUI.color = new Color(1, 1, 1, 0.9f);
@@ -212,9 +236,10 @@ namespace Boxophobic.StyledGUI
             EditorGUI.DrawRect(fillRect, Constant.CategoryColor);
             EditorGUI.DrawRect(lineRect, Constant.LineColor);
 
-            bannerText = ShowBannerText(bannerText);
+            bannerText = FormatBannerText(bannerText);
+            message = BoxoUtils.FormatMessage(message);
 
-            var bannerContext = new GUIContent(bannerText, infoText);
+            var bannerContext = new GUIContent(bannerText, message);
             GUI.Label(titleRect, bannerContext, Constant.HeaderStyle);
 
             GUI.color = new Color(1, 1, 1, 0.39f);
@@ -258,7 +283,7 @@ namespace Boxophobic.StyledGUI
             return enabled;
         }
 
-        static string ShowBannerText(string bannerText)
+        static string FormatBannerText(string bannerText)
         {
             if (bannerText.Contains("_"))
             {

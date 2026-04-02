@@ -1,8 +1,10 @@
-// Cristian Pop - https://boxophobic.com/
+﻿// Cristian Pop - https://boxophobic.com/
 
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -803,6 +805,26 @@ namespace Boxophobic.Utility
             }
         }
 
+        public static void SetMaterialTextureSpace(Material material, string texProp, string spaceProp)
+        {
+            var spaceMode = 0;
+
+            if (material.HasTexture(texProp))
+            {
+                var texture = material.GetTexture(texProp);
+
+                if (texture != null)
+                {
+                    if (texture.isDataSRGB)
+                    {
+                        spaceMode = 1;
+                    }
+                }
+            }
+
+            material.SetFloat(spaceProp, spaceMode);
+        }
+
         public static float GetMaterialFloat(Material material, string property, float defaultValue)
         {
             float value = defaultValue;
@@ -895,8 +917,93 @@ namespace Boxophobic.Utility
             return output / (2048f - 1);
         }
 
-#if UNITY_EDITOR
+        // Text Utils
+        public static string FormatMessage(string message)
+        {
+            if (string.IsNullOrEmpty(message))
+            {
+                return "";
+            }
 
+            var sb = new StringBuilder(message.Length);
+
+            for (int i = 0; i < message.Length; i++)
+            {
+                if (i < message.Length - 2)
+                {
+                    string token = message.Substring(i, 3);
+
+                    switch (token)
+                    {
+                        case "MIN": sb.Append('-'); i += 2; continue;
+                        case "PLU": sb.Append('+'); i += 2; continue;
+                        case "NEW": sb.Append('\n'); i += 2; continue;
+                        case "EXC": sb.Append('!'); i += 2; continue;
+                        case "COL": sb.Append(':'); i += 2; continue;
+                        case "APS": sb.Append('\''); i += 2; continue;
+                        case "QUO": sb.Append('"'); i += 2; continue;
+                        case "SLH": sb.Append('/'); i += 2; continue;
+                        case "OPA": sb.Append('('); i += 2; continue;
+                        case "CPA": sb.Append(')'); i += 2; continue;
+                        case "LAR": sb.Append('<'); i += 2; continue;
+                        case "RAR": sb.Append('>'); i += 2; continue;
+                        case "EQU": sb.Append('='); i += 2; continue;
+                        case "HAS": sb.Append('#'); i += 2; continue;
+                        case "AST": sb.Append('*'); i += 2; continue;
+                        case "BUL": sb.Append('◦'); i += 2; continue;
+                    }
+                }
+
+                if (i < message.Length - 1)
+                {
+                    string token2 = message.Substring(i, 2);
+                    if (token2 == "__") { sb.Append(','); i++; continue; }
+                }
+
+                sb.Append(message[i]);
+            }
+
+            return sb.ToString();
+        }
+
+        public static string FormatMessageReverse(string message)
+        {
+            if (string.IsNullOrEmpty(message))
+            {
+                return "";
+            }
+
+            var sb = new StringBuilder(message.Length);
+
+            foreach (char c in message)
+            {
+                switch (c)
+                {
+                    case '-': sb.Append("MIN"); break;
+                    case '+': sb.Append("PLU"); break;
+                    case '\n': sb.Append("NEW"); break;
+                    case '!': sb.Append("EXC"); break;
+                    case ':': sb.Append("COL"); break;
+                    case '\'': sb.Append("APS"); break;
+                    case '"': sb.Append("QUO"); break;
+                    case '/': sb.Append("SLH"); break;
+                    case '(': sb.Append("OPA"); break;
+                    case ')': sb.Append("CPA"); break;
+                    case '<': sb.Append("LAR"); break;
+                    case '>': sb.Append("RAR"); break;
+                    case '=': sb.Append("EQU"); break;
+                    case '#': sb.Append("HAS"); break;
+                    case '*': sb.Append("AST"); break;
+                    case '◦': sb.Append("BUL"); break;
+                    case ',': sb.Append("__"); break;
+                    default: sb.Append(c); break;
+                }
+            }
+
+            return sb.ToString();
+        }
+
+#if UNITY_EDITOR
         public static float GetMaterialSerializedFloat(Material material, string internalName, float defaultValue)
         {
             float value = defaultValue;
@@ -1181,6 +1288,34 @@ namespace Boxophobic.Utility
             }
         }
 
+        public static void SetDefineSymbols(string[] symbols)
+        {
+#if UNITY_2023_1_OR_NEWER
+            BuildTarget buildTarget = EditorUserBuildSettings.activeBuildTarget;
+            BuildTargetGroup targetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
+            var namedBuildTarget = UnityEditor.Build.NamedBuildTarget.FromBuildTargetGroup(targetGroup);
+            var defineSymbols = PlayerSettings.GetScriptingDefineSymbols(namedBuildTarget);
+#else
+            var defineSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
+#endif
+
+            for (int i = 0; i < symbols.Length; i++)
+            {
+                var symbol = symbols[i];
+
+                if (!defineSymbols.Contains(symbol))
+                {
+                    defineSymbols += ";" + symbol + ";";
+
+#if UNITY_2023_1_OR_NEWER
+                PlayerSettings.SetScriptingDefineSymbols(namedBuildTarget, defineSymbols);
+#else
+                    PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, defineSymbols);
+#endif
+                }
+            }
+        }
+
         public static void SetDefineSymbol(string symbol, string version)
         {
 #if UNITY_2023_1_OR_NEWER
@@ -1228,6 +1363,54 @@ namespace Boxophobic.Utility
 #endif
         }
 
+        public static void RemoveDefineSymbol(string symbol)
+        {
+#if UNITY_2023_1_OR_NEWER
+            BuildTarget buildTarget = EditorUserBuildSettings.activeBuildTarget;
+            BuildTargetGroup targetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
+            var namedBuildTarget = UnityEditor.Build.NamedBuildTarget.FromBuildTargetGroup(targetGroup);
+            var defineSymbols = PlayerSettings.GetScriptingDefineSymbols(namedBuildTarget);
+#else
+            var defineSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
+#endif
+
+            defineSymbols = defineSymbols.Replace(symbol + ";", "");
+            defineSymbols = defineSymbols.Replace(symbol, ""); // define symbol is the last
+
+#if UNITY_2023_1_OR_NEWER
+            PlayerSettings.SetScriptingDefineSymbols(namedBuildTarget, defineSymbols);
+#else
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, defineSymbols);
+#endif
+
+        }
+
+        public static void RemoveDefineSymbols(string[] symbols)
+        {
+#if UNITY_2023_1_OR_NEWER
+            BuildTarget buildTarget = EditorUserBuildSettings.activeBuildTarget;
+            BuildTargetGroup targetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
+            var namedBuildTarget = UnityEditor.Build.NamedBuildTarget.FromBuildTargetGroup(targetGroup);
+            var defineSymbols = PlayerSettings.GetScriptingDefineSymbols(namedBuildTarget);
+#else
+            var defineSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
+#endif
+
+            for (int i = 0; i < symbols.Length; i++)
+            {
+                var symbol = symbols[i];
+
+                defineSymbols = defineSymbols.Replace(symbol + ";", "");
+                defineSymbols = defineSymbols.Replace(symbol, ""); // define symbol is the last
+
+#if UNITY_2023_1_OR_NEWER
+                PlayerSettings.SetScriptingDefineSymbols(namedBuildTarget, defineSymbols);
+#else
+                PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, defineSymbols);
+#endif
+            }
+        }
+
         public static bool HasDefineSymbol(string symbol)
         {
             bool hasSymbol = false;
@@ -1267,10 +1450,13 @@ namespace Boxophobic.Utility
 #endif
         }
 
-        public static void DisableServerExecution()
+        public static bool DisableServerExecution()
         {
 #if UNITY_SERVER
-            return;
+            return true;
+#else
+            return Application.isBatchMode ||
+                   SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null;
 #endif
         }
 

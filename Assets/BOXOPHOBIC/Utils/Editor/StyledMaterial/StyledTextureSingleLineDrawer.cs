@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using UnityEditor;
+using Boxophobic.Utility;
 
 namespace Boxophobic.StyledGUI
 {
@@ -47,6 +48,8 @@ namespace Boxophobic.StyledGUI
         public override void OnGUI(Rect position, MaterialProperty prop, string label, MaterialEditor materialEditor)
         {
             GUILayout.Space(top);
+
+            tooltip = BoxoUtils.FormatMessage(tooltip);
 
             materialEditor.TexturePropertySingleLine(new GUIContent(prop.displayName, tooltip), prop);
 

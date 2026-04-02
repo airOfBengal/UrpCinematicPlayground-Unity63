@@ -3,6 +3,7 @@
 using UnityEngine;
 using UnityEditor;
 using System;
+using Boxophobic.Utility;
 
 namespace Boxophobic.StyledGUI
 {
@@ -10,17 +11,21 @@ namespace Boxophobic.StyledGUI
     {
         public string type;
         public string message;
+        public string messageLong;
         public string keyword;
         public float value;
         public float top;
         public float down;
 
-        MessageType mType;
+        public bool useMessageLong;
+
+        MessageType messageType;
 
         public StyledMessageDrawer(string type, string message)
         {
             this.type = type;
             this.message = message;
+            this.messageLong = "";
             keyword = null;
 
             this.top = 0;
@@ -31,6 +36,7 @@ namespace Boxophobic.StyledGUI
         {
             this.type = type;
             this.message = message;
+            this.messageLong = "";
             keyword = null;
 
             this.top = top;
@@ -41,6 +47,41 @@ namespace Boxophobic.StyledGUI
         {
             this.type = type;
             this.message = message;
+            this.messageLong = "";
+            this.keyword = keyword;
+            this.value = value;
+
+            this.top = top;
+            this.down = down;
+        }
+
+        public StyledMessageDrawer(string type, string message, string messageLong)
+        {
+            this.type = type;
+            this.message = message;
+            this.messageLong = messageLong;
+            keyword = null;
+
+            this.top = 0;
+            this.down = 0;
+        }
+
+        public StyledMessageDrawer(string type, string message, string messageLong, float top, float down)
+        {
+            this.type = type;
+            this.message = message;
+            this.messageLong = messageLong;
+            keyword = null;
+
+            this.top = top;
+            this.down = down;
+        }
+
+        public StyledMessageDrawer(string type, string message, string messageLong, string keyword, float value, float top, float down)
+        {
+            this.type = type;
+            this.message = message;
+            this.messageLong = messageLong;
             this.keyword = keyword;
             this.value = value;
 
@@ -54,22 +95,20 @@ namespace Boxophobic.StyledGUI
 
             if (type == "None")
             {
-                mType = MessageType.None;
+                messageType = MessageType.None;
             }
             else if (type == "Info")
             {
-                mType = MessageType.Info;
+                messageType = MessageType.Info;
             }
             else if (type == "Warning")
             {
-                mType = MessageType.Warning;
+                messageType = MessageType.Warning;
             }
             else if (type == "Error")
             {
-                mType = MessageType.Error;
+                messageType = MessageType.Error;
             }
-
-            message = message.Replace("__", ",");
 
             if (keyword != null)
             {
@@ -78,18 +117,15 @@ namespace Boxophobic.StyledGUI
                     if (material.GetFloat(keyword) == value)
                     {
                         GUILayout.Space(top);
-
-                        EditorGUILayout.HelpBox(message, mType);
-
+                        DrawMessage(position, prop);
                         GUILayout.Space(down);
-
                     }
                 }
             }
             else
             {
                 GUILayout.Space(top);
-                EditorGUILayout.HelpBox(message, mType);
+                DrawMessage(position, prop);
                 GUILayout.Space(down);
             }
         }
@@ -97,6 +133,38 @@ namespace Boxophobic.StyledGUI
         public override float GetPropertyHeight(MaterialProperty prop, string label, MaterialEditor editor)
         {
             return -2;
+        }
+
+        void DrawMessage(Rect position, MaterialProperty prop)
+        {
+            if (messageLong == "")
+            {
+                message = BoxoUtils.FormatMessage(message);
+
+                EditorGUILayout.HelpBox(message, messageType);
+            }
+            else
+            {
+                if (!useMessageLong)
+                {
+                    message = BoxoUtils.FormatMessage(message);
+
+                    EditorGUILayout.HelpBox(message, messageType);
+                }
+                else
+                {
+                    messageLong = BoxoUtils.FormatMessage(messageLong);
+
+                    EditorGUILayout.HelpBox(messageLong, messageType);
+                }
+
+                var lastRect = GUILayoutUtility.GetLastRect();
+
+                if (GUI.Button(lastRect, GUIContent.none, GUIStyle.none))
+                {
+                    useMessageLong = !useMessageLong;
+                }
+            }
         }
     }
 }

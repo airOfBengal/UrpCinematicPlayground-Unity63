@@ -15,7 +15,7 @@ namespace Boxophobic.StyledGUI
         public string colapsable;
         public string conditions = "";
         public string dotColor = "";
-        public string infoText = "";
+        public string message = "";
         public float top;
         public float down;
 
@@ -58,13 +58,13 @@ namespace Boxophobic.StyledGUI
             this.top = top;
             this.down = down;
         }
-        public StyledCategoryDrawer(string category, string colapsable, string infoText, float top, float down)
+        public StyledCategoryDrawer(string category, string colapsable, string message, float top, float down)
         {
             this.category = category;
             this.colapsable = colapsable;
             this.conditions = "";
             this.dotColor = "";
-            this.infoText = infoText;
+            this.message = message;
             this.top = top;
             this.down = down;
         }
@@ -75,18 +75,18 @@ namespace Boxophobic.StyledGUI
             this.colapsable = colapsable;
             this.conditions = conditions;
             this.dotColor = dotColor;
-            this.infoText = "";
+            this.message = "";
             this.top = top;
             this.down = down;
         }
 
-        public StyledCategoryDrawer(string category, string colapsable, string conditions, string dotColor, string infoText, float top, float down)
+        public StyledCategoryDrawer(string category, string colapsable, string message, string conditions, string dotColor, float top, float down)
         {
             this.category = category;
             this.colapsable = colapsable;
+            this.message = message;
             this.conditions = conditions;
             this.dotColor = dotColor;
-            this.infoText = infoText;
             this.top = top;
             this.down = down;
         }
@@ -155,13 +155,13 @@ namespace Boxophobic.StyledGUI
 
             if (showDot)
             {
-                isEnabled = StyledGUI.DrawInspectorCategory(category, isEnabled, isColapsable, dotColor, infoText, top, down);
+                isEnabled = StyledGUI.DrawInspectorCategory(category, isEnabled, isColapsable, dotColor, message, top, down);
             }
             else
             {
-                if (infoText != "")
+                if (message != "")
                 {
-                    isEnabled = StyledGUI.DrawInspectorCategory(category, isEnabled, isColapsable, infoText, top, down);
+                    isEnabled = StyledGUI.DrawInspectorCategory(category, isEnabled, isColapsable, message, top, down);
                 }
                 else
                 {

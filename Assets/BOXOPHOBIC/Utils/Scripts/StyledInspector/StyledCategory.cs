@@ -5,9 +5,10 @@ namespace Boxophobic.StyledGUI
     public class StyledCategory : PropertyAttribute
     {
         public string category;
+        public bool colapsable;
+        public string message;
         public float top;
         public float down;
-        public bool colapsable;
 
         public StyledCategory(string category)
         {
@@ -15,14 +16,6 @@ namespace Boxophobic.StyledGUI
             this.top = 10;
             this.down = 10;
             this.colapsable = false;
-        }
-
-        public StyledCategory(string category, bool colapsable)
-        {
-            this.category = category;
-            this.top = 10;
-            this.down = 10;
-            this.colapsable = colapsable;
         }
 
         public StyledCategory(string category, float top, float down)
@@ -33,12 +26,21 @@ namespace Boxophobic.StyledGUI
             this.colapsable = false;
         }
 
-        public StyledCategory(string category, int top, int down, bool colapsable)
+        public StyledCategory(string category, bool colapsable, int top, int down)
         {
             this.category = category;
             this.top = top;
             this.down = down;
             this.colapsable = colapsable;
+        }
+
+        public StyledCategory(string category, bool colapsable, string message, int top, int down)
+        {
+            this.category = category;
+            this.top = top;
+            this.down = down;
+            this.colapsable = colapsable;
+            this.message = message;
         }
     }
 }
