@@ -607,8 +607,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 867399050}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0.6199999, z: 3.1399994}
+  m_LocalRotation: {x: 0.017628727, y: 0.9736719, z: 0.08080457, w: -0.21242134}
+  m_LocalPosition: {x: 1.3644041, y: 0.91714746, z: 2.8887157}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -803,7 +803,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.00131, y: 0.00051, z: -0.0006}
-  m_LocalScale: {x: 0.0002, y: 0.0002, z: 0.0002}
+  m_LocalScale: {x: 0.0005, y: 0.0005, z: 0.0005}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3546695097652225972}
@@ -874,7 +874,10 @@ VisualEffect:
     m_Float:
       m_Array: []
     m_Vector2f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 1, y: 2}
+        m_Name: Sphere MinMax Radius
+        m_Overridden: 1
     m_Vector3f:
       m_Array: []
     m_Vector4f:
@@ -3339,7 +3342,7 @@ Animator:
   m_GameObject: {fileID: 7812378393904363240}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 899850eff34a40f4882c61a7325c2c67, type: 3}
-  m_Controller: {fileID: 9100000, guid: bd223d1b08e6c0444b82048e4bf6b2b2, type: 2}
+  m_Controller: {fileID: 9100000, guid: bd1ebf44c80139c45bd369312e7e4395, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -4648,6 +4651,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7431208136048602194}
   - component: {fileID: 3585103596566787624}
+  - component: {fileID: 7812378393904363241}
   m_Layer: 0
   m_Name: Wizard_Humanoid_M
   m_TagString: Untagged
@@ -4655,6 +4659,113 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7812378393904363241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7812378393904363240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.BoneRenderer
+  boneShape: 1
+  drawBones: 1
+  drawTripods: 0
+  boneSize: 1
+  tripodSize: 1
+  boneColor: {r: 0, g: 0, b: 1, a: 0.5}
+  m_Transforms:
+  - {fileID: 1374546917013690817}
+  - {fileID: 1005087853064434817}
+  - {fileID: 7466262107429379427}
+  - {fileID: 6145516620192906886}
+  - {fileID: 2713363870705553450}
+  - {fileID: 4111531960727715148}
+  - {fileID: 8461871216079476976}
+  - {fileID: 4868121961652133803}
+  - {fileID: 8773762178653581989}
+  - {fileID: 944394562251779148}
+  - {fileID: 6487219180616001012}
+  - {fileID: 5137646634045616417}
+  - {fileID: 5682745652830750212}
+  - {fileID: 8919687662559582675}
+  - {fileID: 5676086831054589251}
+  - {fileID: 4429563301252511006}
+  - {fileID: 5264613131607704471}
+  - {fileID: 3546695097652225972}
+  - {fileID: 3968787661165476997}
+  - {fileID: 7862135774966095826}
+  - {fileID: 3358716973476843659}
+  - {fileID: 3525789056397885607}
+  - {fileID: 4452415047127866322}
+  - {fileID: 2485781605039834402}
+  - {fileID: 4968620809714960683}
+  - {fileID: 306916728371285828}
+  - {fileID: 1598362300136769343}
+  - {fileID: 5412635733574622830}
+  - {fileID: 8994990650917774915}
+  - {fileID: 241258923936443783}
+  - {fileID: 465895582681947836}
+  - {fileID: 1809276825236981005}
+  - {fileID: 5621245917542949198}
+  - {fileID: 4728538446917692609}
+  - {fileID: 7053959336803612016}
+  - {fileID: 7254665952376857096}
+  - {fileID: 8732608700409659242}
+  - {fileID: 3464849106434396825}
+  - {fileID: 1814626827035635803}
+  - {fileID: 1929097244198641398}
+  - {fileID: 6817116714008994356}
+  - {fileID: 1749598978531247478}
+  - {fileID: 2226502017220352844}
+  - {fileID: 1432960166353226695}
+  - {fileID: 7797567158237355641}
+  - {fileID: 3169025719371681765}
+  - {fileID: 2681592172005406286}
+  - {fileID: 1252443225525961092}
+  - {fileID: 8865917569286616426}
+  - {fileID: 7702988319646341728}
+  - {fileID: 2104273928104636956}
+  - {fileID: 7221976583518779422}
+  - {fileID: 9138991395525906971}
+  - {fileID: 620834452247425153}
+  - {fileID: 9116187835003989703}
+  - {fileID: 8574382537506597792}
+  - {fileID: 6719453348848264689}
+  - {fileID: 2626300720287301010}
+  - {fileID: 3832734112007252178}
+  - {fileID: 137587370806061776}
+  - {fileID: 4265165532437560749}
+  - {fileID: 7730342657262781720}
+  - {fileID: 6890017852566170773}
+  - {fileID: 3009517668655361881}
+  - {fileID: 8861106903573839239}
+  - {fileID: 2380059611586861049}
+  - {fileID: 4139556196721410291}
+  - {fileID: 763250973228657366}
+  - {fileID: 1718136482522691387}
+  - {fileID: 7185489373989892292}
+  - {fileID: 3073153776221543983}
+  - {fileID: 4632240328753361501}
+  - {fileID: 486033293781273914}
+  - {fileID: 122586872199176267}
+  - {fileID: 6103486547407180861}
+  - {fileID: 2161853045169783616}
+  - {fileID: 1630594183896066382}
+  - {fileID: 3557199030995443282}
+  - {fileID: 7167785308279505398}
+  - {fileID: 3573048790961369880}
+  - {fileID: 6665397563613060859}
+  - {fileID: 4811603441229591876}
+  - {fileID: 2511232288273431575}
+  - {fileID: 2273232254777990535}
+  - {fileID: 596651366140700618}
+  - {fileID: 8857079286863479793}
+  - {fileID: 4229308908358248163}
+  - {fileID: 2918365096825011256}
 --- !u!4 &7862135774966095826
 Transform:
   m_ObjectHideFlags: 0
