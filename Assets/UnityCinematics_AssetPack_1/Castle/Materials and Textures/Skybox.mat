@@ -138,3 +138,4 @@ Material:
     - _SkyTint: {r: 0.17795478, g: 0.25905758, b: 0.2924528, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
