@@ -291,6 +291,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 340748221}
+  - component: {fileID: 340748222}
   m_Layer: 0
   m_Name: WizardGameObjects
   m_TagString: Untagged
@@ -317,6 +318,18 @@ Transform:
   - {fileID: 1311208944}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &340748222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340748220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc920d25d974a714891cf51bc26c37da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NinjaMixamoTest
 --- !u!1 &459889795
 GameObject:
   m_ObjectHideFlags: 0
@@ -3348,7 +3361,7 @@ Animator:
   m_GameObject: {fileID: 7812378393904363240}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 899850eff34a40f4882c61a7325c2c67, type: 3}
-  m_Controller: {fileID: 9100000, guid: bd1ebf44c80139c45bd369312e7e4395, type: 2}
+  m_Controller: {fileID: 9100000, guid: e49d762eedb2aae4ea6a9e701cd0da7c, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
